@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тренажер</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Тренажер для Димыча!</h1>
+        <p class="greeting">Здорова Димон! Давай потренируем мозги?</p>
+        
+        <div class="controls">
+            <div class="operation-buttons">
+                <button id="multiplication" class="active">Умножение</button>
+                <button id="division">Деление</button>
+                <button id="mixed">Умножение/Деление</button>
+            </div>
+            
+            <div class="range-selector">
+                <select id="range-type">
+                    <option value="on">На</option>
+                    <option value="to">До</option>
+                </select>
+                
+                <select id="number">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="exercises" class="exercises"></div>
+        
+        <div class="action-buttons">
+            <button id="check">Проверить</button>
+            <button id="reset" style="display: none;">Попробовать снова</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
