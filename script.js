@@ -3,16 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const multiplicationBtn = document.getElementById('multiplication');
     const divisionBtn = document.getElementById('division');
     const mixedBtn = document.getElementById('mixed');
+    const showTableBtn = document.getElementById('show-table');
     const rangeTypeSelect = document.getElementById('range-type');
     const numberSelect = document.getElementById('number');
     const exercisesContainer = document.getElementById('exercises');
     const checkBtn = document.getElementById('check');
     const resetBtn = document.getElementById('reset');
+    const continueBtn = document.getElementById('continue');
     
     // Текущие настройки
     let currentOperation = 'multiplication';
     let currentRangeType = 'on';
     let currentNumber = 2;
+    let isShowingTable = false;
     
     // Установка обработчиков событий
     multiplicationBtn.addEventListener('click', function() {
@@ -30,18 +33,61 @@ document.addEventListener('DOMContentLoaded', function() {
         generateExercises();
     });
     
+    showTableBtn.addEventListener('click', showMultiplicationTable);
+    
     rangeTypeSelect.addEventListener('change', function() {
         currentRangeType = rangeTypeSelect.value;
-        generateExercises();
+        if (isShowingTable) {
+            showMultiplicationTable();
+        } else {
+            generateExercises();
+        }
     });
     
     numberSelect.addEventListener('change', function() {
         currentNumber = parseInt(numberSelect.value);
-        generateExercises();
+        if (isShowingTable) {
+            showMultiplicationTable();
+        } else {
+            generateExercises();
+        }
     });
     
     checkBtn.addEventListener('click', checkAnswers);
     resetBtn.addEventListener('click', resetExercises);
+    continueBtn.addEventListener('click', continueTraining);
+    
+    // Показать таблицу умножения
+    function showMultiplicationTable() {
+        isShowingTable = true;
+        exercisesContainer.innerHTML = '';
+        
+        const column = document.createElement('div');
+        column.className = 'exercise-column';
+        
+        for (let i = 1; i <= 10; i++) {
+            const exerciseElement = document.createElement('div');
+            exerciseElement.className = 'exercise table-row';
+            exerciseElement.innerHTML = `
+                <p>${currentNumber} × ${i} = ${currentNumber * i}</p>
+            `;
+            column.appendChild(exerciseElement);
+        }
+        
+        exercisesContainer.appendChild(column);
+        
+        checkBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
+        continueBtn.style.display = 'block';
+    }
+    
+    // Продолжить тренировку
+    function continueTraining() {
+        isShowingTable = false;
+        generateExercises();
+        continueBtn.style.display = 'none';
+        checkBtn.style.display = 'block';
+    }
     
     // Генерация упражнений
     function generateExercises() {
@@ -84,6 +130,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         exercisesContainer.appendChild(column1);
         exercisesContainer.appendChild(column2);
+        
+        checkBtn.style.display = 'block';
+        resetBtn.style.display = 'none';
+        continueBtn.style.display = 'none';
     }
     
     function generateMultiplicationExercises(exercises) {
