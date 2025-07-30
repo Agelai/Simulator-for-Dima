@@ -59,6 +59,14 @@ h1 {
     transform: scale(1.05);
 }
 
+.operation-buttons button#show-table {
+    background-color: #9c88ff;
+}
+
+.operation-buttons button#show-table:hover {
+    background-color: #8c7ae6;
+}
+
 .range-selector {
     display: flex;
     justify-content: center;
@@ -95,6 +103,10 @@ h1 {
     padding: 10px;
     background-color: #f8f9fa;
     border-radius: 8px;
+}
+
+.exercise.table-row {
+    background-color: #e3f2fd;
 }
 
 .exercise p {
@@ -151,6 +163,16 @@ h1 {
 
 #reset:hover {
     background-color: #ff9800;
+    transform: scale(1.05);
+}
+
+#continue {
+    background-color: #9c88ff;
+    color: white;
+}
+
+#continue:hover {
+    background-color: #8c7ae6;
     transform: scale(1.05);
 }
 
