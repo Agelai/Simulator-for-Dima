@@ -174,32 +174,75 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Проверка ответов
-    function checkAnswers() {
-        const inputs = exercisesContainer.querySelectorAll('input');
-        let allCorrect = true;
+function checkAnswers() {
+    const inputs = exercisesContainer.querySelectorAll('input');
+    let allCorrect = true;
+    
+    inputs.forEach(function(input) {
+        const userAnswer = parseInt(input.value);
+        const correctAnswer = parseInt(input.dataset.answer);
         
-        inputs.forEach(function(input) {
-            const userAnswer = parseInt(input.value);
-            const correctAnswer = parseInt(input.dataset.answer);
-            
-            if (isNaN(userAnswer)) {
-                input.classList.add('incorrect');
-                allCorrect = false;
-            } else if (userAnswer !== correctAnswer) {
-                input.classList.add('incorrect');
-                allCorrect = false;
-            } else {
-                input.classList.remove('incorrect');
-            }
-        });
-        
-        checkBtn.style.display = 'none';
-        resetBtn.style.display = 'block';
-        
-        if (allCorrect) {
-            alert('Молодец! Все ответы правильные!');
+        if (isNaN(userAnswer)) {
+            input.classList.add('incorrect');
+            allCorrect = false;
+        } else if (userAnswer !== correctAnswer) {
+            input.classList.add('incorrect');
+            allCorrect = false;
+        } else {
+            input.classList.remove('incorrect');
         }
+    });
+    
+    checkBtn.style.display = 'none';
+    resetBtn.style.display = 'block';
+    
+    if (allCorrect) {
+        showSuccessModal();
     }
+}
+
+// Функция показа модального окна с успехом
+function showSuccessModal() {
+    // Создаем элементы модального окна
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay';
+    
+    const modal = document.createElement('div');
+    modal.className = 'success-modal';
+    
+    modal.innerHTML = `
+        <div class="modal-content">
+            <div class="smiley">👍</div>
+            <h3>Молодец!</h3>
+            <p>Все ответы правильные!</p>
+            <button class="modal-close-btn">OK</button>
+        </div>
+    `;
+    
+    modalOverlay.appendChild(modal);
+    document.body.appendChild(modalOverlay);
+    
+    // Обработчик закрытия модального окна
+    const closeBtn = modal.querySelector('.modal-close-btn');
+    closeBtn.addEventListener('click', function() {
+        document.body.removeChild(modalOverlay);
+    });
+    
+    // Закрытие по клику на overlay
+    modalOverlay.addEventListener('click', function(e) {
+        if (e.target === modalOverlay) {
+            document.body.removeChild(modalOverlay);
+        }
+    });
+    
+    // Закрытие по клавише Escape
+    document.addEventListener('keydown', function closeOnEscape(e) {
+        if (e.key === 'Escape') {
+            document.body.removeChild(modalOverlay);
+            document.removeEventListener('keydown', closeOnEscape);
+        }
+    });
+}
     
     // Сброс упражнений
     function resetExercises() {
